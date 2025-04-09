@@ -27,6 +27,14 @@ export const useCartStore = create((set, get) => ({
     return get().cart.get(item) || 0;
   },
 
+  getTotalItems: () => {
+    let total = 0;
+    get().cart.forEach((frequency) => {
+      total += frequency;
+    });
+    return total;
+  },
+
   removeItem: (item) =>
     set((state) => {
       const tempCart = new Map(state.cart);

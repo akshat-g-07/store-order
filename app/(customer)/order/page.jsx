@@ -1,3 +1,4 @@
+import GoToKart from "@/components/order/go-to-cart";
 import MenuItem from "@/components/order/menu-item";
 import SearchBar from "@/components/order/search-bar";
 import VegSwitch from "@/components/order/veg-switch";
@@ -72,6 +73,60 @@ export default function Page() {
       price: "230",
     },
     {
+      id: 11,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 12,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 13,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 14,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 15,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 16,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 17,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 18,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
+      id: 19,
+      name: "Honey Chilli Potato",
+      veg: Math.random() > 0.5 ? true : false,
+      price: "230",
+    },
+    {
       id: 10,
       name: "Honey Chilli Potato",
       veg: Math.random() > 0.5 ? true : false,
@@ -81,8 +136,8 @@ export default function Page() {
 
   return (
     <>
-      <section className="w-full max-w-[550px] mx-auto">
-        <section className="py-5 px-2 flex justify-between items-center">
+      <section className="w-full max-w-[550px] mx-auto relative">
+        <section className="py-5 px-2 flex justify-between items-center sticky top-0 bg-gradient-to-r from-[#FFCF91] to-[#FFD194]">
           <SearchBar searchSuggestions={searchSuggestions} />
           <VegSwitch />
         </section>
@@ -97,6 +152,7 @@ export default function Page() {
             />
           ))}
         </section>
+        <GoToKart />
       </section>
     </>
   );
