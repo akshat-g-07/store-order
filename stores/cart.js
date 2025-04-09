@@ -1,14 +1,38 @@
 import { create } from "zustand";
 
-export const useCartStore = create((set) => ({
-  cart: [],
+export const useCartStore = create((set, get) => ({
+  cart: new Map(),
+
   addItem: (item) =>
-    set((state) => ({
-      cart: [...state.cart, item],
-    })),
+    set((state) => {
+      const tempCart = new Map(state.cart);
+      const currentFrequency = tempCart.get(item) || 0;
+      tempCart.set(item, currentFrequency + 1);
+      return { cart: tempCart };
+    }),
+
+  decreaseItem: (item) =>
+    set((state) => {
+      const tempCart = new Map(state.cart);
+      const currentFrequency = tempCart.get(item) || 0;
+      if (currentFrequency <= 1) {
+        tempCart.delete(item);
+      } else {
+        tempCart.set(item, currentFrequency - 1);
+      }
+      return { cart: tempCart };
+    }),
+
+  getItem: (item) => {
+    return get().cart.get(item) || 0;
+  },
+
   removeItem: (item) =>
-    set((state) => ({
-      cart: state.cart.filter((itm) => itm !== item),
-    })),
-  clearItems: () => set(() => ({ cart: [] })),
+    set((state) => {
+      const tempCart = new Map(state.cart);
+      tempCart.delete(item);
+      return { cart: tempCart };
+    }),
+
+  clearItems: () => set({ cart: new Map() }),
 }));
