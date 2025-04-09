@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useOrderItemsStore } from "@/stores";
+import { useCartStore } from "@/stores/cart";
 import { Search } from "lucide-react";
 
 export default function SearchBar({ searchSuggestions }) {
-  const { addItem } = useOrderItemsStore();
+  const { addItem } = useCartStore();
   const [isFocused, setIsFocused] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [filteredSuggestions, setFilteredSuggestions] = useState([]);
@@ -38,7 +38,7 @@ export default function SearchBar({ searchSuggestions }) {
       ref={searchRef}
       className="relative w-[80vw] min-w-[200px] max-w-[450px]"
     >
-      <div className="flex items-center rounded-md bg-white transition-all duration-200 focus-within:ring-2 focus-within:ring-brand-primaryGreenHover focus-within:shadow-lg overflow-hidden">
+      <div className="flex items-center rounded-md bg-white transition-all duration-200 focus-within:ring-2 focus-within:ring-brand-primaryGreenHover focus-within:shadow-lg overflow-hidden border border-brand-primaryGreen">
         <button
           className="flex h-10 w-12 items-center justify-center rounded-l-md bg-brand-primaryYellow hover:bg-brand-primaryYellow/90"
           aria-label="Search"
