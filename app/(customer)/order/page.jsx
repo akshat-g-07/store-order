@@ -17,10 +17,10 @@ const searchSuggestions = [
 export default function Page() {
   return (
     <>
-      <div className="py-20 flex justify-center">
+      <section className="py-5 px-2 flex justify-between items-center">
         <SearchBar searchSuggestions={searchSuggestions} />
         <VegSwitch />
-      </div>
+      </section>
     </>
   );
 }
