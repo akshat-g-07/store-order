@@ -1,4 +1,5 @@
 import SearchBar from "@/components/order/search-bar";
+import VegSwitch from "@/components/order/veg-switch";
 
 const searchSuggestions = [
   "fan",
@@ -18,6 +19,7 @@ export default function Page() {
     <>
       <div className="py-20 flex justify-center">
         <SearchBar searchSuggestions={searchSuggestions} />
+        <VegSwitch />
       </div>
     </>
   );
