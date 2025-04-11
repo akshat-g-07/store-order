@@ -84,7 +84,7 @@ export default function PlaceOrder() {
         <AlertDialogFooter>
           <AlertDialogAction
             onClick={() => {
-              router.push("/confirm");
+              router.push("/confirm?orderId=123");
             }}
             className="bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover"
           >
