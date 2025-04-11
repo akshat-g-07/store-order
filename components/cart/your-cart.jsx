@@ -1,12 +1,32 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
+import { ChevronRight } from "lucide-react";
 
 import ItemParent from "./item-parent";
 
 export default function YourCart() {
+  const router = useRouter();
   const { getAllObjects } = useCartStore();
   const allObjects = getAllObjects();
+
+  if (allObjects.length === 0) {
+    return (
+      <div
+        className="w-screen h-screen flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-4"
+        onClick={() => {
+          router.push("/order");
+        }}
+      >
+        <p>No items selected</p>
+        <p className="flex items-center text-xl font-medium">
+          Go To Menu
+          <ChevronRight className="size-5" />
+        </p>
+      </div>
+    );
+  }
 
   return (
     <>
