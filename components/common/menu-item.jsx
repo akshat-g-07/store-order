@@ -1,13 +1,16 @@
-"use client";
-
-import { useCartStore } from "@/stores/cart";
-
 import { cn } from "@/lib/utils";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function MenuItem({ id, name, price, veg }) {
-  const { addItem, getItem, decreaseItem } = useCartStore();
+export default function MenuItem({
+  id,
+  name,
+  price,
+  veg,
+  minusClick,
+  getValue,
+  plusClick,
+}) {
   return (
     <>
       <Card className="w-full max-w-[500px]">
@@ -36,16 +39,16 @@ export default function MenuItem({ id, name, price, veg }) {
             <div
               className="border-r border-black/80"
               onClick={() => {
-                decreaseItem(id);
+                minusClick(id);
               }}
             >
               -
             </div>
-            <div className="font-semibold">{getItem(id)}</div>
+            <div className="font-semibold">{getValue(id)}</div>
             <div
               className="border-l border-black/80"
               onClick={() => {
-                addItem(id);
+                plusClick(id);
               }}
             >
               +

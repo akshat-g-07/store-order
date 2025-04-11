@@ -1,5 +1,5 @@
 import GoToKart from "@/components/order/go-to-cart";
-import MenuItem from "@/components/order/menu-item";
+import Menu from "@/components/order/menu";
 import SearchBar from "@/components/order/search-bar";
 import VegSwitch from "@/components/order/veg-switch";
 
@@ -142,15 +142,7 @@ export default function Page() {
           <VegSwitch />
         </section>
         <section className="py-5 px-2 flex flex-col space-y-6">
-          {dummyItem.map((item) => (
-            <MenuItem
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              price={item.price}
-              veg={item.veg}
-            />
-          ))}
+          <Menu dummyItem={dummyItem} />
         </section>
         <GoToKart />
       </section>
