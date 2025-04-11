@@ -141,7 +141,7 @@ export default function Page() {
           <SearchBar searchSuggestions={searchSuggestions} />
           <VegSwitch />
         </section>
-        <section className="py-5 px-2 flex flex-col space-y-6">
+        <section className="pt-5 pb-[300px] px-2 flex flex-col space-y-6">
           <Menu dummyItem={dummyItem} />
         </section>
         <GoToKart />
