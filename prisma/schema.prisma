@@ -3,13 +3,38 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url  	    = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
-  id      Int      @id @default(autoincrement())
-  name    String?  @db.VarChar(255)
-  email   String   @unique @db.VarChar(255)
+  id          String @id @default(uuid())
+  userName    String
+  phoneNumber String
+
+  orders Order[]
 }
 
+model Inventory {
+  id    String  @id @default(uuid())
+  name  String
+  veg   Boolean
+  stock Boolean
+  price String
+}
+
+model Order {
+  orderId String      @id @default(uuid())
+  status  OrderStatus
+  items   String[]
+  value   String
+
+  ownerId String
+  user    User   @relation(fields: [ownerId], references: [id])
+}
+
+enum OrderStatus {
+  Confirmed
+  Delivered
+  NotDelivered
+}
