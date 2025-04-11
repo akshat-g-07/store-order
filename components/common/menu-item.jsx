@@ -37,16 +37,18 @@ export default function MenuItem({
 
           <div className="flex bg-brand-primaryYellow rounded py-2 *:px-3">
             <div
-              className="border-r border-black/80"
+              className="border-r border-black/80 cursor-pointer"
               onClick={() => {
                 minusClick(id);
               }}
             >
               -
             </div>
-            <div className="font-semibold">{getValue(id)}</div>
+            <div className="font-semibold pointer-events-none">
+              {getValue(id)}
+            </div>
             <div
-              className="border-l border-black/80"
+              className="border-l border-black/80 cursor-pointer"
               onClick={() => {
                 plusClick(id);
               }}
