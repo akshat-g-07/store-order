@@ -35,6 +35,11 @@ export const useCartStore = create((set, get) => ({
     return total;
   },
 
+  getAllObjects: () => {
+    const tempObj = Object.fromEntries(get().cart);
+    return Object.keys(tempObj);
+  },
+
   removeItem: (item) =>
     set((state) => {
       const tempCart = new Map(state.cart);
