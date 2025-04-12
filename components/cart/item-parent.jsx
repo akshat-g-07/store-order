@@ -57,7 +57,7 @@ export default function ItemParent({ id }) {
         <MenuItem
           id={id}
           name={inventoryItem.name}
-          price={inventoryItem.price}
+          price={inventoryItem.pricePerItem}
           veg={inventoryItem.veg}
           minusClick={handleMinusClick}
           getValue={handleGetValue}

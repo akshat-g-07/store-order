@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { GetInventoryItemByID } from "@/actions/inventory";
+import { CreateOrder } from "@/actions/order";
 import { useCartStore } from "@/stores/cart";
 import { Check } from "lucide-react";
 
@@ -23,8 +24,10 @@ export default function PlaceOrder() {
   const [userName, setUserName] = useState("");
   const [totalPrice, setTotalPrice] = useState(0);
   const [userPhone, setUserPhone] = useState("");
+  const [errorInUserDetails, setErrorInUserDetails] = useState(null);
   const { getAllObjects, getItem } = useCartStore();
   const allObjects = getAllObjects();
+  console.log("allObjects", allObjects);
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -33,9 +36,12 @@ export default function PlaceOrder() {
       for (const obj of allObjects) {
         const frequency = getItem(obj);
         const response = await GetInventoryItemByID(obj);
-        totalPrice += Number(response.data.price) * frequency;
+        if (response.error) {
+          console.log("Error in CalculateTotalPrice", response.error);
+        } else {
+          totalPrice += response.data.pricePerItem * frequency;
+        }
       }
-
       setTotalPrice(totalPrice);
     };
 
@@ -98,14 +104,53 @@ export default function PlaceOrder() {
         />
         <AlertDialogFooter>
           <AlertDialogAction
-            onClick={() => {
-              router.push("/confirm?orderId=123");
+            onClick={async (e) => {
+              e.preventDefault();
+              if (userName.length === 0) {
+                setErrorInUserDetails("Please enter your name");
+                return;
+              }
+
+              if (userPhone.length === 0) {
+                setErrorInUserDetails("Please enter your phone number");
+                return;
+              }
+
+              if (userPhone.length !== 10) {
+                setErrorInUserDetails("Please enter a valid phone number");
+                return;
+              }
+
+              setErrorInUserDetails(null);
+              const response = await CreateOrder(
+                userName,
+                userPhone,
+                allObjects.map((obj) => ({
+                  frequency: getItem(obj),
+                  inventoryID: obj,
+                })),
+                totalPrice
+              );
+              console.log("response", response);
+              if (response.error) {
+                setErrorInUserDetails(
+                  "Something went wrong. Please try again in sometime."
+                );
+                return;
+              }
+
+              setUserName("");
+              setUserPhone("");
+              router.push(`/confirm?orderID=${response.data.orderID}`);
             }}
             className="bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover"
           >
             Confirm
           </AlertDialogAction>
         </AlertDialogFooter>
+        {errorInUserDetails && (
+          <p className="text-red-500 text-sm">{errorInUserDetails}</p>
+        )}
       </AlertDialogContent>
     </AlertDialog>
   );

@@ -23,7 +23,7 @@ export default function Menu({ inventory }) {
           key={item.id}
           id={item.id}
           name={item.name}
-          price={item.price}
+          price={item.pricePerItem}
           veg={item.veg}
           minusClick={handleMinusClick}
           getValue={handleGetValue}
