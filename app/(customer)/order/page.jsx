@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { getInventory } from "@/actions/inventory";
+import { GetInventory } from "@/actions/inventory";
 import { useVegOnlyStore } from "@/stores/veg-only";
 
 import Error from "@/components/common/error";
@@ -19,7 +19,7 @@ export default function Page() {
 
   const fetchInventory = useCallback(async () => {
     setIsLoading(true);
-    const response = await getInventory(vegOnly);
+    const response = await GetInventory(vegOnly);
     if (response.error) {
       setError(response.error);
       setInventory([]);

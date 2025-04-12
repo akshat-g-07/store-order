@@ -1,7 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { GetInventoryItemByID } from "@/actions/inventory";
 import { useCartStore } from "@/stores/cart";
 import { Check } from "lucide-react";
 
@@ -20,12 +21,26 @@ import { Input } from "@/components/ui/input";
 export default function PlaceOrder() {
   const router = useRouter();
   const [userName, setUserName] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
   const [userPhone, setUserPhone] = useState("");
-  const { getAllObjects } = useCartStore();
+  const { getAllObjects, getItem } = useCartStore();
   const allObjects = getAllObjects();
 
-  //   MARK: calculate total price by getting all items, iterating over them, get price from db and add them
-  const totalPrice = 200;
+  useEffect(() => {
+    const calculateTotalPrice = async () => {
+      let totalPrice = 0;
+
+      for (const obj of allObjects) {
+        const frequency = getItem(obj);
+        const response = await GetInventoryItemByID(obj);
+        totalPrice += Number(response.data.price) * frequency;
+      }
+
+      setTotalPrice(totalPrice);
+    };
+
+    calculateTotalPrice();
+  }, [allObjects]);
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
