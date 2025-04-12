@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function GoToKart({ isLoading }) {
+export default function GoToCart({ isLoading }) {
   const router = useRouter();
   const { getTotalItems } = useCartStore();
   const totalItems = getTotalItems();

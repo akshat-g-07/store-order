@@ -45,7 +45,7 @@ export default function PlaceOrder() {
     };
 
     calculateTotalPrice();
-  }, [allObjects]);
+  }, [allObjects, getItem]);
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
