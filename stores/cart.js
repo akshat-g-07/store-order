@@ -24,7 +24,7 @@ export const useCartStore = create((set, get) => ({
     }),
 
   getItem: (item) => {
-    return get().cart.get(Number(item)) || 0;
+    return get().cart.get(item) || 0;
   },
 
   getTotalItems: () => {
