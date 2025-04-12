@@ -4,11 +4,13 @@ import { useEffect, useRef, useState } from "react";
 import { useCartStore } from "@/stores/cart";
 import { Search } from "lucide-react";
 
-export default function SearchBar({ searchSuggestions }) {
+import { cn } from "@/lib/utils";
+
+export default function SearchBar({ inventory, isLoading }) {
   const { addItem } = useCartStore();
   const [isFocused, setIsFocused] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredSuggestions, setFilteredSuggestions] = useState([]);
+  const [filteredSuggestions, setFilteredSuggestions] = useState(inventory);
   const searchRef = useRef(null);
 
   useEffect(() => {
@@ -24,14 +26,18 @@ export default function SearchBar({ searchSuggestions }) {
 
   useEffect(() => {
     if (searchTerm) {
-      const filtered = searchSuggestions.filter((suggestion) =>
-        suggestion.toLowerCase().includes(searchTerm.toLowerCase())
+      const filtered = inventory.filter((suggestion) =>
+        suggestion.name.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredSuggestions(filtered);
     } else {
       setFilteredSuggestions([]);
     }
-  }, [searchTerm, searchSuggestions]);
+  }, [searchTerm, inventory]);
+
+  useEffect(() => {
+    setFilteredSuggestions(inventory);
+  }, [inventory]);
 
   return (
     <div
@@ -52,26 +58,36 @@ export default function SearchBar({ searchSuggestions }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           onFocus={() => setIsFocused(true)}
+          disabled={isLoading}
         />
       </div>
 
-      {isFocused && searchTerm && filteredSuggestions.length > 0 && (
+      {isFocused && filteredSuggestions.length > 0 && (
         <div className="absolute z-50 w-full rounded-b-md bg-white shadow-lg">
           {filteredSuggestions.map((suggestion, index) => (
             <div
               key={index}
               className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
               onClick={() => {
-                addItem(suggestion);
-                setSearchTerm(suggestion);
+                addItem(suggestion.id);
+                setSearchTerm("");
                 setIsFocused(false);
               }}
             >
-              {/* 
-                MARK: icon from DB
-                 */}
-              <Search className="size-4 mr-2 text-gray-500" />
-              <span>{suggestion}</span>
+              <div
+                className={cn(
+                  "size-4 rounded border flex items-center justify-center mr-2",
+                  suggestion.veg ? "border-emerald-500" : "border-destructive"
+                )}
+              >
+                <div
+                  className={cn(
+                    "size-2 rounded-full",
+                    suggestion.veg ? "bg-emerald-500" : "bg-destructive"
+                  )}
+                />
+              </div>
+              <span>{suggestion.name}</span>
             </div>
           ))}
         </div>
