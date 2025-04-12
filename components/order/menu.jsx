@@ -4,7 +4,7 @@ import { useCartStore } from "@/stores/cart";
 
 import MenuItem from "@/components/common/menu-item";
 
-export default function Menu({ dummyItem }) {
+export default function Menu({ inventory }) {
   const { addItem, getItem, decreaseItem } = useCartStore();
 
   const handleMinusClick = (id) => {
@@ -18,7 +18,7 @@ export default function Menu({ dummyItem }) {
   };
   return (
     <>
-      {dummyItem.map((item) => (
+      {inventory.map((item) => (
         <MenuItem
           key={item.id}
           id={item.id}

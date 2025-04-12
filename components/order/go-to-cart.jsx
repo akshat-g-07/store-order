@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-export default function GoToKart() {
+export default function GoToKart({ isLoading }) {
   const router = useRouter();
   const { getTotalItems } = useCartStore();
   const totalItems = getTotalItems();
@@ -17,8 +17,9 @@ export default function GoToKart() {
     <>
       <section
         className={cn(
-          "py-5 px-2 fixed bg-gradient-to-r from-[#FFCF91] to-[#FFD194] w-full transition-all duration-300 ease-in -bottom-full max-w-[550px]",
-          totalItems && "bottom-20"
+          "py-5 px-2 fixed bg-gradient-to-r from-[#FFCF91] to-[#FFD194] w-full transition-all duration-300 ease-in -bottom-full max-w-[550px] cursor-pointer",
+          totalItems && "bottom-20",
+          isLoading && "opacity-50 pointer-events-none"
         )}
         onClick={() => {
           router.push("/cart");
