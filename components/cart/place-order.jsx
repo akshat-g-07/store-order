@@ -27,7 +27,6 @@ export default function PlaceOrder() {
   const [errorInUserDetails, setErrorInUserDetails] = useState(null);
   const { getAllObjects, getItem } = useCartStore();
   const allObjects = getAllObjects();
-  console.log("allObjects", allObjects);
 
   useEffect(() => {
     const calculateTotalPrice = async () => {
@@ -131,7 +130,7 @@ export default function PlaceOrder() {
                 })),
                 totalPrice
               );
-              console.log("response", response);
+
               if (response.error) {
                 setErrorInUserDetails(
                   "Something went wrong. Please try again in sometime."
