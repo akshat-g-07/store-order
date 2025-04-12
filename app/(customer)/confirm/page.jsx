@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
 import { BadgeCheck, ChevronRight } from "lucide-react";
@@ -8,6 +8,14 @@ import { BadgeCheck, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Page() {
+  return (
+    <Suspense fallback={<>Loading...</>}>
+      <Confirm />
+    </Suspense>
+  );
+}
+
+function Confirm() {
   const router = useRouter();
   const { clearItems } = useCartStore();
   const searchParams = useSearchParams();
@@ -18,7 +26,7 @@ export default function Page() {
       alert("Please place an order first.");
       router.push("/order");
     }
-  }, [orderID]);
+  }, [orderID, router]);
 
   return (
     <>
