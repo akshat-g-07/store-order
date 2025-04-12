@@ -2,7 +2,7 @@
 
 import { db } from "@/lib/db";
 
-export async function getInventory(veg = false, stock = true) {
+export async function GetInventory(veg = false, stock = true) {
   const whereClause = {};
 
   if (veg === true) {
@@ -19,7 +19,21 @@ export async function getInventory(veg = false, stock = true) {
     });
     return { data: inventory };
   } catch (error) {
-    console.log("Error in getInventory", error);
+    console.log("Error in GetInventory", error);
+    return { error: "Failed to fetch inventory" };
+  }
+}
+
+export async function GetInventoryItemByID(id) {
+  try {
+    const inventoryItem = await db.Inventory.findUnique({
+      where: {
+        id,
+      },
+    });
+    return { data: inventoryItem };
+  } catch (error) {
+    console.log("Error in GetInventoryItemByID", error);
     return { error: "Failed to fetch inventory" };
   }
 }
