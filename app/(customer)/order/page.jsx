@@ -6,7 +6,7 @@ import { useVegOnlyStore } from "@/stores/veg-only";
 
 import Error from "@/components/common/error";
 import Loading from "@/components/common/loading";
-import GoToKart from "@/components/order/go-to-cart";
+import GoToCart from "@/components/order/go-to-cart";
 import Menu from "@/components/order/menu";
 import SearchBar from "@/components/order/search-bar";
 import VegSwitch from "@/components/order/veg-switch";
@@ -54,7 +54,7 @@ export default function Page() {
             <Menu inventory={inventory} />
           )}
         </section>
-        <GoToKart isLoading={isLoading} />
+        <GoToCart isLoading={isLoading} />
       </section>
     </>
   );
