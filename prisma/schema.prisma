@@ -10,31 +10,45 @@ datasource db {
 model User {
   id          String @id @default(uuid())
   userName    String
-  phoneNumber String
+  phoneNumber String @unique
 
   orders Order[]
 }
 
 model Inventory {
-  id    String  @id @default(uuid())
-  name  String
-  veg   Boolean
-  stock Boolean
-  price String
+  id           String      @id @default(uuid())
+  name         String
+  veg          Boolean
+  stock        Boolean
+  pricePerItem Int
+  orderItems   OrderItem[]
 }
 
 model Order {
-  orderId String      @id @default(uuid())
-  status  OrderStatus
-  items   String[]
-  value   String
+  orderID    String      @id
+  status     OrderStatus @default(CONFIRMED)
+  orderItems OrderItem[]
+  totalPrice Int
+  createdAt  DateTime    @default(now())
 
-  ownerId String
-  user    User   @relation(fields: [ownerId], references: [id])
+  ownerID String
+  user    User   @relation(fields: [ownerID], references: [id])
+}
+
+model OrderItem {
+  id        String @id @default(uuid())
+  frequency Int
+
+  inventoryID String
+  inventory   Inventory @relation(fields: [inventoryID], references: [id])
+
+  orderID String
+  order   Order  @relation(fields: [orderID], references: [orderID])
+
+  @@unique([orderID, inventoryID])
 }
 
 enum OrderStatus {
-  Confirmed
-  Delivered
-  NotDelivered
+  CONFIRMED
+  DELIVERED
 }
