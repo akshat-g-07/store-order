@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { GetInventoryItemByID } from "@/actions/inventory";
+import { CreateOrder } from "@/actions/order";
 import { useCartStore } from "@/stores/cart";
 import { Check } from "lucide-react";
 
@@ -20,12 +22,30 @@ import { Input } from "@/components/ui/input";
 export default function PlaceOrder() {
   const router = useRouter();
   const [userName, setUserName] = useState("");
+  const [totalPrice, setTotalPrice] = useState(0);
   const [userPhone, setUserPhone] = useState("");
-  const { getAllObjects } = useCartStore();
+  const [errorInUserDetails, setErrorInUserDetails] = useState(null);
+  const { getAllObjects, getItem } = useCartStore();
   const allObjects = getAllObjects();
 
-  //   MARK: calculate total price by getting all items, iterating over them, get price from db and add them
-  const totalPrice = 200;
+  useEffect(() => {
+    const calculateTotalPrice = async () => {
+      let totalPrice = 0;
+
+      for (const obj of allObjects) {
+        const frequency = getItem(obj);
+        const response = await GetInventoryItemByID(obj);
+        if (response.error) {
+          console.log("Error in CalculateTotalPrice", response.error);
+        } else {
+          totalPrice += response.data.pricePerItem * frequency;
+        }
+      }
+      setTotalPrice(totalPrice);
+    };
+
+    calculateTotalPrice();
+  }, [allObjects]);
 
   const handleUserNameChange = (e) => {
     setUserName(e.target.value);
@@ -83,14 +103,53 @@ export default function PlaceOrder() {
         />
         <AlertDialogFooter>
           <AlertDialogAction
-            onClick={() => {
-              router.push("/confirm?orderId=123");
+            onClick={async (e) => {
+              e.preventDefault();
+              if (userName.length === 0) {
+                setErrorInUserDetails("Please enter your name");
+                return;
+              }
+
+              if (userPhone.length === 0) {
+                setErrorInUserDetails("Please enter your phone number");
+                return;
+              }
+
+              if (userPhone.length !== 10) {
+                setErrorInUserDetails("Please enter a valid phone number");
+                return;
+              }
+
+              setErrorInUserDetails(null);
+              const response = await CreateOrder(
+                userName,
+                userPhone,
+                allObjects.map((obj) => ({
+                  frequency: getItem(obj),
+                  inventoryID: obj,
+                })),
+                totalPrice
+              );
+
+              if (response.error) {
+                setErrorInUserDetails(
+                  "Something went wrong. Please try again in sometime."
+                );
+                return;
+              }
+
+              setUserName("");
+              setUserPhone("");
+              router.push(`/confirm?orderID=${response.data.orderID}`);
             }}
             className="bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover"
           >
             Confirm
           </AlertDialogAction>
         </AlertDialogFooter>
+        {errorInUserDetails && (
+          <p className="text-red-500 text-sm">{errorInUserDetails}</p>
+        )}
       </AlertDialogContent>
     </AlertDialog>
   );
