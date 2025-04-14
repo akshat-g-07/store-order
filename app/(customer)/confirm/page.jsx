@@ -32,27 +32,25 @@ function Confirm() {
     <>
       {orderID && (
         <>
-          <section className="w-full max-w-[550px] mx-auto relative">
-            <div className="w-screen h-screen flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-8">
-              <div>
-                <p className="text-brand-primaryGreenHover flex items-center mb-2">
-                  <span>Your order is confirmed.</span>
-                  <BadgeCheck />
-                </p>
-                <p>Order No: {orderID}</p>
-              </div>
-              <Button
-                className="flex items-center text-xl font-medium bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover py-8"
-                onClick={() => {
-                  clearItems();
-                  router.push("/order");
-                }}
-              >
-                Order More
-                <ChevronRight className="size-5" />
-              </Button>
+          <div className="w-screen h-screen flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-8">
+            <div>
+              <p className="text-brand-primaryGreenHover flex items-center mb-2">
+                <span>Your order is confirmed.</span>
+                <BadgeCheck />
+              </p>
+              <p>Order No: {orderID}</p>
             </div>
-          </section>
+            <Button
+              className="flex items-center text-xl font-medium bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover py-8"
+              onClick={() => {
+                clearItems();
+                router.push("/order");
+              }}
+            >
+              Order More
+              <ChevronRight className="size-5" />
+            </Button>
+          </div>
         </>
       )}
     </>

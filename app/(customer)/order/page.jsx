@@ -41,25 +41,23 @@ export default function Page() {
 
   return (
     <>
-      <section className="w-full max-w-[550px] mx-auto relative">
-        <section className="py-5 px-2 flex flex-col justify-between items-center sticky top-0 bg-gradient-to-r from-[#FFCF91] to-[#FFD194]">
-          <div className="flex space-x-2 items-center">
-            <SearchBar inventory={inventory} isLoading={isLoading} />
-            <ProfileButton />
-          </div>
-          <ModeSwitch isLoading={isLoading} />
-        </section>
-        <section className="pt-5 pb-[300px] px-2 flex flex-col space-y-6">
-          {isLoading && !error ? (
-            <Loading className="w-full flex justify-center items-center py-[100px]" />
-          ) : error ? (
-            <Error />
-          ) : (
-            <Menu inventory={inventory} />
-          )}
-        </section>
-        <GoToCart isLoading={isLoading} />
+      <section className="py-5 px-2 flex flex-col justify-between items-center sticky top-0 bg-brand-primaryYellow">
+        <div className="flex space-x-2 items-center">
+          <SearchBar inventory={inventory} isLoading={isLoading} />
+          <ProfileButton />
+        </div>
+        <ModeSwitch isLoading={isLoading} />
       </section>
+      <section className="pt-5 pb-[300px] px-2 flex flex-col space-y-6">
+        {isLoading && !error ? (
+          <Loading className="w-full flex justify-center items-center py-[100px]" />
+        ) : error ? (
+          <Error />
+        ) : (
+          <Menu inventory={inventory} />
+        )}
+      </section>
+      <GoToCart isLoading={isLoading} />
     </>
   );
 }
