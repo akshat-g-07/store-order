@@ -9,6 +9,7 @@ import Loading from "@/components/common/loading";
 import GoToCart from "@/components/order/go-to-cart";
 import Menu from "@/components/order/menu";
 import ModeSwitch from "@/components/order/mode-switch";
+import ProfileButton from "@/components/order/profile-button";
 import SearchBar from "@/components/order/search-bar";
 
 export default function Page() {
@@ -44,7 +45,7 @@ export default function Page() {
         <section className="py-5 px-2 flex flex-col justify-between items-center sticky top-0 bg-gradient-to-r from-[#FFCF91] to-[#FFD194]">
           <div className="flex space-x-2 items-center">
             <SearchBar inventory={inventory} isLoading={isLoading} />
-            <div className="size-10 bg-[url('https://github.com/shadcn.png')] bg-no-repeat bg-center bg-cover rounded-full" />
+            <ProfileButton />
           </div>
           <ModeSwitch isLoading={isLoading} />
         </section>
