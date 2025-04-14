@@ -30,3 +30,36 @@ export async function GetUser(phoneNumber) {
     return { error: "Failed to fetch user" };
   }
 }
+
+export async function GetUserOrdersByPhoneNumber(phoneNumber) {
+  try {
+    const userOrders = await db.User.findUnique({
+      where: {
+        phoneNumber: phoneNumber,
+      },
+      include: {
+        orders: {
+          orderBy: {
+            createdAt: "desc",
+          },
+          include: {
+            orderItems: {
+              include: {
+                inventory: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (userOrders) {
+      return { data: userOrders };
+    } else {
+      return { error: "User not found" };
+    }
+  } catch (error) {
+    console.log("Error in GetUserOrdersByPhoneNumber", error);
+    return { error: "Failed to fetch users orders" };
+  }
+}
