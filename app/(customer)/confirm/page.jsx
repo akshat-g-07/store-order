@@ -32,7 +32,7 @@ function Confirm() {
     <>
       {orderID && (
         <>
-          <div className="w-screen h-screen flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-8">
+          <div className="w-full flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-8 pt-5">
             <div>
               <p className="text-brand-primaryGreenHover flex items-center mb-2">
                 <span>Your order is confirmed.</span>

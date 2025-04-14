@@ -12,8 +12,8 @@ export default function RootLayout({ children }) {
   const imgSrc = process.env.IMG_URL;
   return (
     <html lang="en">
-      <body>
-        <header className="bg-brand-primaryYellow">
+      <body className="w-screen min-h-screen">
+        <header className="bg-brand-primaryYellow w-full h-fit">
           <Link
             className="pt-6 pb-2 flex items-center justify-center"
             href="/order"
@@ -28,7 +28,7 @@ export default function RootLayout({ children }) {
             />
           </Link>
         </header>
-        <section className="w-full max-w-[550px] mx-auto relative">
+        <section className="w-full max-w-[550px] mx-auto relative min-h-[calc(100vh-100px)]">
           {children}
         </section>
       </body>
