@@ -1,6 +1,7 @@
 import { cn } from "@/lib/utils";
 
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import VegTypeSVG from "@/components/common/veg-type-svg";
 
 export default function MenuItem({
   id,
@@ -19,19 +20,7 @@ export default function MenuItem({
         </CardHeader>
         <CardContent className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
-            <div
-              className={cn(
-                "size-4 rounded border flex items-center justify-center",
-                veg ? "border-emerald-500" : "border-destructive"
-              )}
-            >
-              <div
-                className={cn(
-                  "size-2 rounded-full",
-                  veg ? "bg-emerald-500" : "bg-destructive"
-                )}
-              />
-            </div>
+            <VegTypeSVG veg={veg} />
             <p>Rs.{price}</p>
           </div>
 
