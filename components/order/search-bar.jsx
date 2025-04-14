@@ -31,7 +31,7 @@ export default function SearchBar({ inventory, isLoading }) {
       );
       setFilteredSuggestions(filtered);
     } else {
-      setFilteredSuggestions([]);
+      setFilteredSuggestions(inventory);
     }
   }, [searchTerm, inventory]);
 
@@ -46,7 +46,7 @@ export default function SearchBar({ inventory, isLoading }) {
     >
       <div className="flex items-center rounded-md bg-white transition-all duration-200 focus-within:ring-2 focus-within:ring-brand-primaryGreenHover focus-within:shadow-lg overflow-hidden border border-brand-primaryGreen">
         <button
-          className="flex h-10 w-12 items-center justify-center rounded-l-md bg-brand-primaryYellow hover:bg-brand-primaryYellow/90"
+          className="flex h-10 w-12 items-center justify-center rounded-l-md bg-[#f9eddc] hover:bg-[#f9eddc]/90"
           aria-label="Search"
         >
           <Search className="size-4 text-gray-800" />

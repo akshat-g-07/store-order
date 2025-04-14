@@ -49,7 +49,7 @@ export default function Page() {
   };
 
   return (
-    <section className="w-full max-w-[550px] mx-auto flex flex-col gap-2 items-center">
+    <section className="flex flex-col gap-2 items-center pt-5">
       <label htmlFor="userPhone" className="w-full text-center">
         Enter your Phone Number:
       </label>
