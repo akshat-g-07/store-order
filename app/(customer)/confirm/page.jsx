@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
 import { BadgeCheck, ChevronRight } from "lucide-react";
@@ -8,6 +8,14 @@ import { BadgeCheck, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function Page() {
+  return (
+    <Suspense fallback={<>Loading...</>}>
+      <Confirm />
+    </Suspense>
+  );
+}
+
+function Confirm() {
   const router = useRouter();
   const { clearItems } = useCartStore();
   const searchParams = useSearchParams();
@@ -18,33 +26,31 @@ export default function Page() {
       alert("Please place an order first.");
       router.push("/order");
     }
-  }, [orderID]);
+  }, [orderID, router]);
 
   return (
     <>
       {orderID && (
         <>
-          <section className="w-full max-w-[550px] mx-auto relative">
-            <div className="w-screen h-screen flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-8">
-              <div>
-                <p className="text-brand-primaryGreenHover flex items-center mb-2">
-                  <span>Your order is confirmed.</span>
-                  <BadgeCheck />
-                </p>
-                <p>Order No: {orderID}</p>
-              </div>
-              <Button
-                className="flex items-center text-xl font-medium bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover py-8"
-                onClick={() => {
-                  clearItems();
-                  router.push("/order");
-                }}
-              >
-                Order More
-                <ChevronRight className="size-5" />
-              </Button>
+          <div className="w-full flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-8 pt-5">
+            <div>
+              <p className="text-brand-primaryGreenHover flex items-center mb-2">
+                <span>Your order is confirmed.</span>
+                <BadgeCheck />
+              </p>
+              <p>Order No: {orderID}</p>
             </div>
-          </section>
+            <Button
+              className="flex items-center text-xl font-medium bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover py-8"
+              onClick={() => {
+                clearItems();
+                router.push("/order");
+              }}
+            >
+              Order More
+              <ChevronRight className="size-5" />
+            </Button>
+          </div>
         </>
       )}
     </>

@@ -14,7 +14,7 @@ export default function YourCart() {
   if (allObjects.length === 0) {
     return (
       <div
-        className="w-screen h-screen flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-4 cursor-pointer"
+        className="w-full h-[300px] flex flex-col items-center justify-center text-center text-2xl font-semibold space-y-4 cursor-pointer"
         onClick={() => {
           router.push("/order");
         }}
