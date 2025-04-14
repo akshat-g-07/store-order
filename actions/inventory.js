@@ -2,15 +2,19 @@
 
 import { db } from "@/lib/db";
 
-export async function GetInventory(veg = false, stock = true) {
+export async function GetInventory(veg = false, nonVeg = false, stock = true) {
   const whereClause = {};
 
   if (veg === true) {
     whereClause.veg = true;
   }
 
-  if (stock !== undefined) {
-    whereClause.stock = stock;
+  if (nonVeg === true) {
+    whereClause.veg = false;
+  }
+
+  if (stock === true) {
+    whereClause.stock = true;
   }
 
   try {

@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCartStore } from "@/stores/cart";
 import { Search } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import VegTypeSVG from "@/components/common/veg-type-svg";
 
 export default function SearchBar({ inventory, isLoading }) {
   const { addItem } = useCartStore();
@@ -67,26 +67,14 @@ export default function SearchBar({ inventory, isLoading }) {
           {filteredSuggestions.map((suggestion, index) => (
             <div
               key={index}
-              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer space-x-2"
               onClick={() => {
                 addItem(suggestion.id);
                 setSearchTerm("");
                 setIsFocused(false);
               }}
             >
-              <div
-                className={cn(
-                  "size-4 rounded border flex items-center justify-center mr-2",
-                  suggestion.veg ? "border-emerald-500" : "border-destructive"
-                )}
-              >
-                <div
-                  className={cn(
-                    "size-2 rounded-full",
-                    suggestion.veg ? "bg-emerald-500" : "bg-destructive"
-                  )}
-                />
-              </div>
+              <VegTypeSVG veg={suggestion.veg} />
               <span>{suggestion.name}</span>
             </div>
           ))}
