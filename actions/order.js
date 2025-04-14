@@ -3,6 +3,7 @@
 import { CreateUser, GetUser } from "@/actions/user";
 
 import { db } from "@/lib/db";
+import { notifyOrder } from "@/lib/notifyOrder";
 import { generateOrderID } from "@/lib/orderID";
 
 export async function CreateOrder(
@@ -32,6 +33,8 @@ export async function CreateOrder(
         },
       },
     });
+
+    await notifyOrder(order);
 
     return { data: order };
   } catch (error) {
