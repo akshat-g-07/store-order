@@ -1,0 +1,30 @@
+import { ArrowTopRightIcon } from "@radix-ui/react-icons";
+
+export default function Footer() {
+  return (
+    <footer className="w-full h-fit border-y border-grid px-8 sm:px-6 md:px-12 py-5 text-muted-foreground justify-center fixed bottom-0 bg-brand-primaryGreen text-white">
+      <div className="w-full text-center flex items-center justify-center gap-x-1 text-base">
+        <p>Made by</p>
+        <a
+          href="https://pixelventurers.com"
+          target="_blank"
+          className="font-semibold text-blue-500 hover:underline flex items-start"
+        >
+          <span>Pixel Venturers</span>
+          <ArrowTopRightIcon className="size-3" />
+        </a>
+      </div>
+      <div className="w-full mt-2 text-center flex items-center justify-center gap-x-1 text-base">
+        <p>Powered by</p>
+        <a
+          href="https://initiatejs.dev/"
+          target="_blank"
+          className="font-semibold text-yellow-500 hover:underline flex items-start"
+        >
+          <span>InitiateJS</span>
+          <ArrowTopRightIcon className="size-3" />
+        </a>
+      </div>
+    </footer>
+  );
+}
