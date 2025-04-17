@@ -1,11 +1,12 @@
-import dynamic from "next/dynamic";
+"use client";
 
-const Parent = dynamic(() => import("@/components/all-orders/parent"), {
-  ssr: false,
-});
+import { parseCookies } from "nookies";
+
+import Store from "@/components/all-orders/store";
 
 export default function Page() {
-  const AUTH_KEYWORD = process.env.AUTH_KEYWORD;
+  const cookies = parseCookies();
+  const user = cookies.user;
 
-  return <Parent authKeyword={AUTH_KEYWORD} />;
+  return <Store user={user} />;
 }
