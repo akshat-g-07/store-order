@@ -10,8 +10,8 @@ const navOptions = [
     link: "/all-orders",
   },
   {
-    name: "Orders History",
-    link: "/orders-history",
+    name: "Order History",
+    link: "/order-history",
   },
   {
     name: "Inventory",
