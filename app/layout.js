@@ -12,7 +12,7 @@ export default function RootLayout({ children }) {
   const imgSrc = process.env.IMG_URL;
   return (
     <html lang="en">
-      <body className="w-screen min-h-screen">
+      <body className="min-h-screen">
         <header className="bg-brand-primaryYellow w-full h-fit">
           <Link
             className="pt-6 pb-2 flex items-center justify-center"
