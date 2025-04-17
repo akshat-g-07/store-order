@@ -1,10 +1,10 @@
-import StoreNav from "@/components/common/store-nav";
+import dynamic from "next/dynamic";
 
-export default function Layout({ children }) {
-  return (
-    <section>
-      <StoreNav />
-      {children}
-    </section>
-  );
+const StoreLayout = dynamic(() => import("@/components/common/store-layout"), {
+  ssr: false,
+});
+
+export default function Layout(props) {
+  const AUTH_KEYWORD = process.env.AUTH_KEYWORD;
+  return <StoreLayout authKeyword={AUTH_KEYWORD} {...props} />;
 }
