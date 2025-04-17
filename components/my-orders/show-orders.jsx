@@ -6,7 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import VegTypeSVG from "@/components/common/veg-type-svg";
+import OrderItemBody from "@/components/common/order-item-body";
 
 export default function ShowOrders({ orders }) {
   return (
@@ -27,7 +27,7 @@ function Order({ order }) {
             <p className="order-title text-base font-bold">
               Order No: {order.orderID.split("aa")[1]}
             </p>
-            <p className="">
+            <p>
               Status:{" "}
               <span
                 className={cn(
@@ -56,7 +56,7 @@ function Order({ order }) {
         <AccordionContent>
           <div className="flex flex-col gap-y-2">
             {order.orderItems.map((orderItem) => (
-              <OrderItem key={orderItem.id} orderItem={orderItem} />
+              <OrderItemBody key={orderItem.id} orderItem={orderItem} />
             ))}
           </div>
           <div className="w-full border-t border-border mt-4 pt-2 flex justify-between items-center text-lg">
@@ -66,21 +66,5 @@ function Order({ order }) {
         </AccordionContent>
       </AccordionItem>
     </Accordion>
-  );
-}
-
-function OrderItem({ orderItem }) {
-  return (
-    <div className="flex w-full gap-x-2 items-center">
-      <VegTypeSVG veg={orderItem.inventory.veg} />
-      <p className="w-[22px] opacity-50 text-sm">{orderItem.frequency} X</p>
-      <p className="flex-1">{orderItem.inventory.name}</p>
-      <p className="w-[50px] font-medium text-right text-sm">
-        Rs.{orderItem.inventory.pricePerItem}
-      </p>
-      <p className="w-[55px] font-medium text-right border-l border-black">
-        Rs.{orderItem.inventory.pricePerItem * orderItem.frequency}
-      </p>
-    </div>
   );
 }

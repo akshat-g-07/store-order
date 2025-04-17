@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import VegTypeSVG from "@/components/common/veg-type-svg";
 
@@ -14,7 +12,7 @@ export default function MenuItem({
 }) {
   return (
     <>
-      <Card className="w-full max-w-[500px]">
+      <Card className="w-full">
         <CardHeader className="pb-3">
           <CardTitle>{name}</CardTitle>
         </CardHeader>
