@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 
+const adminRoutes = ["/all-orders", "/order-history", "/inventory"];
+
 export function middleware(request) {
   const url = request.nextUrl.clone();
   const path = url.pathname;
@@ -13,7 +15,7 @@ export function middleware(request) {
     return NextResponse.redirect(new URL("/order", request.url));
   }
 
-  if (path === "/all-orders") {
+  if (adminRoutes.includes(path)) {
     if (!authUsers.includes(user)) {
       return NextResponse.redirect(new URL("/order", request.url));
     }

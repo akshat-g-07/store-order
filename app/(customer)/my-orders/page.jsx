@@ -34,7 +34,6 @@ export default function Page() {
 
     setIsLoading(true);
     const response = await GetUserOrdersByPhoneNumber(userPhone);
-    console.log(response);
     if (response.error === "User not found") {
       setError("Please place an order first.");
       setOrders(null);
