@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useState } from "react";
 import { GetOrdersByDate } from "@/actions/order";
 
-import OrderItem from "@/components/all-orders/order-item";
 import Error from "@/components/common/error";
+import OrderItem from "@/components/common/order-item";
 
 export default function Store({ user }) {
   const [orders, setOrders] = useState([]);

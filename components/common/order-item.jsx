@@ -49,17 +49,19 @@ export default function OrderItem({
               })}
             </p>
           </div>
-          <Button
-            size="lg"
-            className="bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover"
-            onClick={async () => {
-              await UpdateOrderStatus(orderID);
-              computeOrders(orderID);
-            }}
-          >
-            Delivered
-            <Check className="size-5 ml-2" />
-          </Button>
+          {computeOrders && (
+            <Button
+              size="lg"
+              className="bg-brand-primaryGreen text-white hover:bg-brand-primaryGreenHover"
+              onClick={async () => {
+                await UpdateOrderStatus(orderID);
+                computeOrders(orderID);
+              }}
+            >
+              Delivered
+              <Check className="size-5 ml-2" />
+            </Button>
+          )}
         </CardTitle>
       </CardHeader>
       <CardContent>
