@@ -1,10 +1,15 @@
-import { headers } from "next/headers";
-
 export async function GET(req) {
+  const url = new URL(req.url);
+  const clientId = url.searchParams.get("client-id");
+  const authUsers = JSON.parse(process.env.AUTH_USERS);
+
+  if (!authUsers.includes(clientId)) {
+    return new Response("Unauthorized", { status: 401 });
+  }
+
   const response = new Response(
     new ReadableStream({
       start(controller) {
-        const clientId = headers().get("client-id") || Date.now().toString();
         global.orderControllers = global.orderControllers || new Map();
         global.orderControllers.set(clientId, controller);
 
