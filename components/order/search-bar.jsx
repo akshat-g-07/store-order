@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useCartStore } from "@/stores/cart";
 import { Search } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import VegTypeSVG from "@/components/common/veg-type-svg";
 
 export default function SearchBar({ inventory, isLoading }) {
   const { addItem } = useCartStore();
@@ -31,7 +31,7 @@ export default function SearchBar({ inventory, isLoading }) {
       );
       setFilteredSuggestions(filtered);
     } else {
-      setFilteredSuggestions([]);
+      setFilteredSuggestions(inventory);
     }
   }, [searchTerm, inventory]);
 
@@ -46,7 +46,7 @@ export default function SearchBar({ inventory, isLoading }) {
     >
       <div className="flex items-center rounded-md bg-white transition-all duration-200 focus-within:ring-2 focus-within:ring-brand-primaryGreenHover focus-within:shadow-lg overflow-hidden border border-brand-primaryGreen">
         <button
-          className="flex h-10 w-12 items-center justify-center rounded-l-md bg-brand-primaryYellow hover:bg-brand-primaryYellow/90"
+          className="flex h-10 w-12 items-center justify-center rounded-l-md bg-[#f9eddc] hover:bg-[#f9eddc]/90"
           aria-label="Search"
         >
           <Search className="size-4 text-gray-800" />
@@ -67,26 +67,14 @@ export default function SearchBar({ inventory, isLoading }) {
           {filteredSuggestions.map((suggestion, index) => (
             <div
               key={index}
-              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
+              className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer space-x-2"
               onClick={() => {
                 addItem(suggestion.id);
                 setSearchTerm("");
                 setIsFocused(false);
               }}
             >
-              <div
-                className={cn(
-                  "size-4 rounded border flex items-center justify-center mr-2",
-                  suggestion.veg ? "border-emerald-500" : "border-destructive"
-                )}
-              >
-                <div
-                  className={cn(
-                    "size-2 rounded-full",
-                    suggestion.veg ? "bg-emerald-500" : "bg-destructive"
-                  )}
-                />
-              </div>
+              <VegTypeSVG veg={suggestion.veg} />
               <span>{suggestion.name}</span>
             </div>
           ))}
