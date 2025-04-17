@@ -47,7 +47,7 @@ export default function Page() {
         </div>
       ) : (
         <div className="py-5 px-2 flex flex-col items-center space-y-4">
-          {orders.map((order) => (
+          {orders?.map((order) => (
             <OrderItem key={order.orderID} order={order} />
           ))}
         </div>
