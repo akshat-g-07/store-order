@@ -41,3 +41,28 @@ export async function GetInventoryItemByID(id) {
     return { error: "Failed to fetch inventory" };
   }
 }
+
+export async function CreateInventoryItem(data) {
+  try {
+    const inventoryItem = await db.Inventory.create({
+      data,
+    });
+    return { data: inventoryItem };
+  } catch (error) {
+    console.log("Error in CreateInventoryItem", error);
+    return { error: "Failed to create inventory item" };
+  }
+}
+
+export async function UpdateInventoryItem(id, data) {
+  try {
+    const inventoryItem = await db.Inventory.update({
+      where: { id },
+      data,
+    });
+    return { data: inventoryItem };
+  } catch (error) {
+    console.log("Error in UpdateInventoryItem", error);
+    return { error: "Failed to update inventory item" };
+  }
+}
