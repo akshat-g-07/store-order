@@ -32,6 +32,14 @@ export async function CreateOrder(
           create: orderItems,
         },
       },
+      include: {
+        user: true,
+        orderItems: {
+          include: {
+            inventory: true,
+          },
+        },
+      },
     });
 
     await notifyOrder(order);
@@ -58,7 +66,11 @@ export async function GetOrdersByDate(date = new Date()) {
         },
       },
       include: {
-        orderItems: true,
+        orderItems: {
+          include: {
+            inventory: true,
+          },
+        },
         user: true,
       },
     });
@@ -66,5 +78,19 @@ export async function GetOrdersByDate(date = new Date()) {
   } catch (error) {
     console.log("Error in GetOrdersByDate", error);
     return { error: "Failed to get orders" };
+  }
+}
+
+export async function UpdateOrderStatus(orderID, status = "DELIVERED") {
+  try {
+    const updatedOrder = await db.Order.update({
+      where: { orderID },
+      data: { status },
+    });
+
+    return { data: updatedOrder };
+  } catch (error) {
+    console.log("Error in UpdateOrderStatus", error);
+    return { error: "Failed to update order status" };
   }
 }
