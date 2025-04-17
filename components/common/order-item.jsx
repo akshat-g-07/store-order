@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import OrderItemBody from "@/components/common/order-item-body";
+import OrderItemHeader from "@/components/common/order-item-header";
 
 export default function OrderItem({
   order: { orderID, createdAt, orderItems, user, status, totalPrice, newOrder },
@@ -15,40 +16,12 @@ export default function OrderItem({
     <Card className={cn("w-full", newOrder && "animate-slide-in")}>
       <CardHeader className="pb-3">
         <CardTitle className="flex justify-between">
-          <div className="flex flex-col items-start font-normal space-y-1">
-            <p className="order-title text-base font-bold">
-              Order No: {orderID.split("aa")[1]}
-            </p>
-
-            <p>
-              Status:{" "}
-              <span
-                className={cn(
-                  "font-medium",
-                  status === "CONFIRMED"
-                    ? "text-brand-primaryYellow"
-                    : "text-brand-primaryGreen"
-                )}
-              >
-                {status}
-              </span>
-            </p>
-            <p className="text-xs">
-              <span className="opacity-50">by: </span>
-              {user.userName}, {user.phoneNumber}
-            </p>
-            <p className="text-xs opacity-50">
-              on:{" "}
-              {new Date(createdAt).toLocaleString("en-IN", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                hour12: true,
-              })}
-            </p>
-          </div>
+          <OrderItemHeader
+            orderID={orderID}
+            status={status}
+            user={user}
+            createdAt={createdAt}
+          />
           {computeOrders && (
             <Button
               size="lg"

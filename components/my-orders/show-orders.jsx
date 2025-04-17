@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils";
-
 import {
   Accordion,
   AccordionContent,
@@ -7,6 +5,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import OrderItemBody from "@/components/common/order-item-body";
+import OrderItemHeader from "@/components/common/order-item-header";
 
 export default function ShowOrders({ orders }) {
   return (
@@ -23,35 +22,11 @@ function Order({ order }) {
     <Accordion type="single" collapsible>
       <AccordionItem value={order.orderID} className="border-b-2">
         <AccordionTrigger className="hover:no-underline [&>div>.order-title]:hover:underline">
-          <div className="flex flex-col items-start font-normal">
-            <p className="order-title text-base font-bold">
-              Order No: {order.orderID.split("aa")[1]}
-            </p>
-            <p>
-              Status:{" "}
-              <span
-                className={cn(
-                  "font-medium",
-                  order.status === "CONFIRMED"
-                    ? "text-brand-primaryYellow"
-                    : "text-brand-primaryGreen"
-                )}
-              >
-                {order.status}
-              </span>
-            </p>
-            <p className="text-xs opacity-50">
-              on:{" "}
-              {new Date(order.createdAt).toLocaleString("en-IN", {
-                day: "numeric",
-                month: "short",
-                year: "numeric",
-                hour: "numeric",
-                minute: "numeric",
-                hour12: true,
-              })}
-            </p>
-          </div>
+          <OrderItemHeader
+            orderID={order.orderID}
+            status={order.status}
+            createdAt={order.createdAt}
+          />
         </AccordionTrigger>
         <AccordionContent>
           <div className="flex flex-col gap-y-2">
