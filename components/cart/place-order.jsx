@@ -65,7 +65,7 @@ export default function PlaceOrder() {
   return (
     <AlertDialog>
       <AlertDialogTrigger>
-        <div className="py-5 px-2 fixed bg-brand-primaryYellow w-full max-w-[550px] bottom-[95px]">
+        <div className="py-5 px-2 fixed bg-brand-primaryYellow w-full max-w-[550px] bottom-[130px]">
           <Card className="w-full max-w-[500px] bg-transparent shadow-none border-0">
             <CardHeader className="pb-3">
               <CardTitle className="flex space-x-2 items-center text-2xl justify-center">
