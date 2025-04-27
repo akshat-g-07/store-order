@@ -53,7 +53,7 @@ export default function Page() {
       const errors = {};
       const { name, veg, stock, pricePerItem } = values;
 
-      const nameRegex = /^[a-zA-Z0-9\s\-_]*$/;
+      const nameRegex = /^[a-zA-Z0-9\s\-_()]*$/;
       if (!name) {
         errors.name = {
           type: "required",
@@ -122,15 +122,18 @@ export default function Page() {
     setLoading(false);
   }, []);
 
-  const handleEdit = useCallback(async (id) => {
-    setItemToEdit(id);
-    const item = inventoryItems.find((item) => item.id === id);
-    form.setValue("name", item.name);
-    form.setValue("veg", item.veg ? "true" : "false");
-    form.setValue("stock", item.stock ? "true" : "false");
-    form.setValue("pricePerItem", item.pricePerItem);
-    setIsOpen(true);
-  }, []);
+  const handleEdit = useCallback(
+    async (id) => {
+      setItemToEdit(id);
+      const item = inventoryItems.find((item) => item.id === id);
+      form.setValue("name", item.name);
+      form.setValue("veg", item.veg ? "true" : "false");
+      form.setValue("stock", item.stock ? "true" : "false");
+      form.setValue("pricePerItem", item.pricePerItem);
+      setIsOpen(true);
+    },
+    [inventoryItems]
+  );
 
   useEffect(() => {
     fetchInventory();
