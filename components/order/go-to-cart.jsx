@@ -18,7 +18,7 @@ export default function GoToCart({ isLoading }) {
       <section
         className={cn(
           "py-5 px-2 fixed bg-brand-primaryYellow w-full transition-all duration-300 ease-in -bottom-full max-w-[550px] cursor-pointer",
-          totalItems && "bottom-[95px]",
+          totalItems && "bottom-[130px]",
           isLoading && "opacity-50 pointer-events-none"
         )}
         onClick={() => {
