@@ -3,6 +3,7 @@
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useCartStore } from "@/stores/cart";
+import { InstagramLogoIcon } from "@radix-ui/react-icons";
 import { BadgeCheck, ChevronRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,17 @@ function Confirm() {
               Order More
               <ChevronRight className="size-5" />
             </Button>
+            <div>
+              <p>Follow us on Instagram:</p>
+              <a
+                href="https://www.instagram.com/the.momosmafia.jind"
+                target="_blank"
+                className="font-semibold text-orange-500 hover:underline flex items-center w-fit space-x-2 justify-center mb-2"
+              >
+                <InstagramLogoIcon className="size-5" />
+                <span>the.momosmafia.jind</span>
+              </a>
+            </div>
           </div>
         </>
       )}
