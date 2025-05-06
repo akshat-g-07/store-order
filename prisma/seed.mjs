@@ -3,6 +3,17 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
+  // Create categories
+  const categories = await Promise.all(
+    ["Electronics", "Groceries", "Clothing", "Books"].map((categoryName) =>
+      prisma.category.create({
+        data: { categoryName },
+      })
+    )
+  );
+  console.log("Created categories");
+
+  // Create users
   const user1 = await prisma.user.create({
     data: {
       userName: "John Doe",
@@ -18,6 +29,7 @@ async function main() {
   });
   console.log("Created users");
 
+  // Create inventory items
   const inventoryItems = await Promise.all(
     Array(10)
       .fill(0)
@@ -28,12 +40,15 @@ async function main() {
             veg: i % 2 === 0,
             stock: i < 8, // 8 items in stock, 2 out of stock
             pricePerItem: 100 + i * 50, // prices from 100 to 550
+            description: `Description for Item ${i + 1}`,
+            categoryName: categories[i % categories.length].categoryName, // Assign categories cyclically
           },
         })
       )
   );
   console.log("Created inventory items");
 
+  // Create orders
   const orders = [];
   for (let i = 0; i < 10; i++) {
     const userId = i % 2 === 0 ? user1.id : user2.id;
