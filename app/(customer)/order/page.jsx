@@ -14,7 +14,7 @@ import SearchBar from "@/components/order/search-bar";
 
 export default function Page() {
   const { vegOnly, nonVegOnly } = useToggleStore();
-  const [inventory, setInventory] = useState([]);
+  const [inventory, setInventory] = useState({});
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -23,10 +23,18 @@ export default function Page() {
     const response = await GetInventory(vegOnly, nonVegOnly);
     if (response.error) {
       setError(response.error);
-      setInventory([]);
+      setInventory({});
     } else {
       setError(null);
-      setInventory(response.data);
+      const groupedInventory = response.data.reduce((acc, item) => {
+        const category = item.categoryName;
+        if (!acc[category]) {
+          acc[category] = [];
+        }
+        acc[category].push(item);
+        return acc;
+      }, {});
+      setInventory(groupedInventory);
     }
     setIsLoading(false);
   }, [vegOnly, nonVegOnly]);

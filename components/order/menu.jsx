@@ -18,17 +18,25 @@ export default function Menu({ inventory }) {
   };
   return (
     <>
-      {inventory.map((item) => (
-        <MenuItem
-          key={item.id}
-          id={item.id}
-          name={item.name}
-          price={item.pricePerItem}
-          veg={item.veg}
-          minusClick={handleMinusClick}
-          getValue={handleGetValue}
-          plusClick={handlePlusClick}
-        />
+      {Object.keys(inventory).map((category) => (
+        <div key={category}>
+          <h2 className="text-lg font-bold mb-4">{category}</h2>
+          <div className="space-y-4">
+            {inventory[category].map((item) => (
+              <MenuItem
+                id={item.id}
+                key={item.id}
+                veg={item.veg}
+                name={item.name}
+                price={item.pricePerItem}
+                description={item.description}
+                minusClick={handleMinusClick}
+                getValue={handleGetValue}
+                plusClick={handlePlusClick}
+              />
+            ))}
+          </div>
+        </div>
       ))}
     </>
   );
