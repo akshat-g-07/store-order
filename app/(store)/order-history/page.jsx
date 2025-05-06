@@ -9,10 +9,11 @@ import OrderItem from "@/components/common/order-item";
 import DatePicker from "@/components/order-history/date-picker";
 
 export default function Page() {
-  const [orders, setOrders] = useState(null);
-  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
+  const [orders, setOrders] = useState(null);
   const [date, setDate] = useState(new Date());
+  const [loading, setLoading] = useState(false);
+  const [totalSales, setTotalSales] = useState(0);
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -24,6 +25,9 @@ export default function Page() {
       } else {
         setError(null);
         setOrders(response.data);
+        setTotalSales(
+          response.data.reduce((sum, order) => sum + order.totalPrice, 0)
+        );
       }
       setLoading(false);
     };
@@ -46,11 +50,16 @@ export default function Page() {
           </p>
         </div>
       ) : (
-        <div className="py-5 px-2 flex flex-col items-center space-y-4">
-          {orders?.map((order) => (
-            <OrderItem key={order.orderID} order={order} />
-          ))}
-        </div>
+        <>
+          <div className="my-2 w-full text-center font-semibold text-lg">
+            Total Sales: {totalSales}
+          </div>
+          <div className="py-5 px-2 flex flex-col items-center space-y-4">
+            {orders?.map((order) => (
+              <OrderItem key={order.orderID} order={order} />
+            ))}
+          </div>
+        </>
       )}
     </section>
   );
