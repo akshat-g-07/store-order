@@ -50,11 +50,11 @@ export default function Page() {
       stock: "",
       description: "",
       pricePerItem: "",
-      category: "",
+      categoryName: "",
     },
     resolver: async (values) => {
       const errors = {};
-      const { name, veg, stock, pricePerItem, category } = values;
+      const { name, veg, stock, pricePerItem, categoryName } = values;
 
       const nameRegex = /^[a-zA-Z0-9\s\-_()]*$/;
       if (!name) {
@@ -99,8 +99,8 @@ export default function Page() {
         };
       }
 
-      if (!category) {
-        errors.category = {
+      if (!categoryName) {
+        errors.categoryName = {
           type: "required",
           message: "Category is required.",
         };
@@ -136,8 +136,6 @@ export default function Page() {
 
   const fetchCategories = useCallback(async () => {
     const response = await GetCategories();
-    console.log("response", response);
-
     setCategories(response.data);
   }, []);
 
@@ -149,7 +147,7 @@ export default function Page() {
       form.setValue("veg", item.veg ? "true" : "false");
       form.setValue("stock", item.stock ? "true" : "false");
       form.setValue("description", item.description);
-      form.setValue("category", item.category);
+      form.setValue("categoryName", item.categoryName);
       form.setValue("pricePerItem", item.pricePerItem);
       setIsOpen(true);
     },
@@ -254,7 +252,7 @@ export default function Page() {
               />
               <FormField
                 control={form.control}
-                name="category"
+                name="categoryName"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Category</FormLabel>
