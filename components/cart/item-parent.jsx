@@ -59,6 +59,7 @@ export default function ItemParent({ id }) {
           name={inventoryItem.name}
           price={inventoryItem.pricePerItem}
           veg={inventoryItem.veg}
+          description={inventoryItem.description}
           minusClick={handleMinusClick}
           getValue={handleGetValue}
           plusClick={handlePlusClick}

@@ -6,6 +6,7 @@ export default function MenuItem({
   name,
   price,
   veg,
+  description,
   minusClick,
   getValue,
   plusClick,
@@ -17,9 +18,12 @@ export default function MenuItem({
           <CardTitle>{name}</CardTitle>
         </CardHeader>
         <CardContent className="flex justify-between items-center">
-          <div className="flex items-center space-x-2">
-            <VegTypeSVG veg={veg} />
-            <p>Rs.{price}</p>
+          <div>
+            <p>{description}</p>
+            <div className="flex items-center space-x-2 mt-2">
+              <VegTypeSVG veg={veg} />
+              <p>Rs.{price}</p>
+            </div>
           </div>
 
           <div className="flex bg-brand-primaryYellow rounded py-2 *:px-3">
