@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { CreateCategory, GetCategories } from "@/actions/category";
 import {
   CreateInventoryItem,
   GetInventory,
@@ -47,11 +48,13 @@ export default function Page() {
       name: "",
       veg: "",
       stock: "",
+      description: "",
       pricePerItem: "",
+      categoryName: "",
     },
     resolver: async (values) => {
       const errors = {};
-      const { name, veg, stock, pricePerItem } = values;
+      const { name, veg, stock, pricePerItem, categoryName } = values;
 
       const nameRegex = /^[a-zA-Z0-9\s\-_()]*$/;
       if (!name) {
@@ -96,6 +99,13 @@ export default function Page() {
         };
       }
 
+      if (!categoryName) {
+        errors.categoryName = {
+          type: "required",
+          message: "Category is required.",
+        };
+      }
+
       return {
         errors: errors,
         values: values,
@@ -104,10 +114,12 @@ export default function Page() {
   });
 
   const [inventoryItems, setInventoryItems] = useState(null);
+  const [categories, setCategories] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
   const [itemToEdit, setItemToEdit] = useState(null);
   const [isOpen, setIsOpen] = useState(false);
+  const [isCategoryOpen, setIsCategoryOpen] = useState(false);
 
   const fetchInventory = useCallback(async () => {
     setLoading(true);
@@ -122,6 +134,11 @@ export default function Page() {
     setLoading(false);
   }, []);
 
+  const fetchCategories = useCallback(async () => {
+    const response = await GetCategories();
+    setCategories(response.data);
+  }, []);
+
   const handleEdit = useCallback(
     async (id) => {
       setItemToEdit(id);
@@ -129,6 +146,8 @@ export default function Page() {
       form.setValue("name", item.name);
       form.setValue("veg", item.veg ? "true" : "false");
       form.setValue("stock", item.stock ? "true" : "false");
+      form.setValue("description", item.description);
+      form.setValue("categoryName", item.categoryName);
       form.setValue("pricePerItem", item.pricePerItem);
       setIsOpen(true);
     },
@@ -138,6 +157,10 @@ export default function Page() {
   useEffect(() => {
     fetchInventory();
   }, [fetchInventory]);
+
+  useEffect(() => {
+    fetchCategories();
+  }, [fetchCategories]);
 
   const onSubmit = async (data) => {
     let response;
@@ -207,6 +230,49 @@ export default function Page() {
                     <FormControl>
                       <Input placeholder="Enter name of the item" {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Enter description of the item"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="categoryName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Category</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a category" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {categories.map(({ categoryName }) => (
+                          <SelectItem key={categoryName} value={categoryName}>
+                            {categoryName}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -286,6 +352,54 @@ export default function Page() {
               </AlertDialogFooter>
             </form>
           </Form>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      <AlertDialog open={isCategoryOpen}>
+        <AlertDialogTrigger asChild>
+          <Button
+            size="icon"
+            onClick={() => {
+              setIsCategoryOpen(true);
+            }}
+            className="fixed bottom-20 size-14 right-4 rounded-full bg-brand-primaryGreen hover:bg-brand-primaryGreenHover text-white"
+          >
+            C
+          </Button>
+        </AlertDialogTrigger>
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Create Category</AlertDialogTitle>
+            <AlertDialogDescription>
+              Enter the category name.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <form
+            onSubmit={async (e) => {
+              e.preventDefault();
+              const categoryName = e.target.elements.categoryName.value;
+              const response = await CreateCategory(categoryName);
+              if (response.error) alert("Try Again. Something went wrong!");
+              else {
+                alert("Success");
+                fetchCategories();
+              }
+              setIsCategoryOpen(false);
+            }}
+            className="space-y-8"
+          >
+            <Input name="categoryName" placeholder="Enter category name" />
+            <AlertDialogFooter>
+              <AlertDialogCancel
+                onClick={() => {
+                  setIsCategoryOpen(false);
+                }}
+              >
+                Cancel
+              </AlertDialogCancel>
+              <AlertDialogAction type="submit">Create</AlertDialogAction>
+            </AlertDialogFooter>
+          </form>
         </AlertDialogContent>
       </AlertDialog>
     </section>

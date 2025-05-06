@@ -11,7 +11,7 @@ import {
 import VegTypeSVG from "@/components/common/veg-type-svg";
 
 export default function InventoryItem({
-  item: { id, name, veg, stock, pricePerItem },
+  item: { id, name, veg, stock, pricePerItem, description, categoryName },
   handleEdit,
 }) {
   return (
@@ -21,9 +21,13 @@ export default function InventoryItem({
         <CardDescription>{stock ? "In Stock" : "Out of Stock"}</CardDescription>
       </CardHeader>
       <CardContent className="flex justify-between items-center">
-        <div className="flex items-center gap-x-2">
-          <VegTypeSVG veg={veg} />
-          <p className="text-sm font-medium">Rs. {pricePerItem}</p>
+        <div className="space-y-2">
+          <p>{categoryName}</p>
+          <p>{description}</p>
+          <div className="flex items-center gap-x-2">
+            <VegTypeSVG veg={veg} />
+            <p className="text-sm font-medium">Rs. {pricePerItem}</p>
+          </div>
         </div>
         <div className="flex items-center justify-center">
           <Button variant="outline" size="icon" onClick={() => handleEdit(id)}>

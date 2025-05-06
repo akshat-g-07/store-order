@@ -1,58 +1,43 @@
+"use client";
+
 import { useCallback, useEffect, useState } from "react";
 import { GetOrdersByDate } from "@/actions/order";
 
 import Error from "@/components/common/error";
 import OrderItem from "@/components/common/order-item";
 
-export default function Store({ user }) {
+export default function Store() {
   const [orders, setOrders] = useState([]);
   const [error, setError] = useState(null);
 
+  const fetchOrders = useCallback(async () => {
+    console.log("called at", Date());
+
+    const { data, error } = await GetOrdersByDate();
+    if (error) {
+      setError(true);
+      setOrders([]);
+    } else {
+      setOrders(
+        data
+          .filter((order) => order.status !== "DELIVERED")
+          .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      );
+      setError(null);
+    }
+  }, []);
+
   useEffect(() => {
-    const fetchOrders = async () => {
-      const { data, error } = await GetOrdersByDate();
-      if (error) {
-        setError(true);
-        setOrders([]);
-      } else {
-        setOrders(
-          data
-            .filter((order) => order.status !== "DELIVERED")
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        );
-        setError(null);
-      }
-    };
-
     fetchOrders();
+  }, [fetchOrders]);
 
-    // set up SSE connection
-    const eventSource = new EventSource("/api/sse?client-id=" + user);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      fetchOrders();
+    }, 1000 * 30);
 
-    eventSource.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      if (data.type === "new-order") {
-        setOrders((prevOrders) =>
-          prevOrders
-            .map((order) => ({ ...order, newOrder: false }))
-            .concat({
-              ...data.order,
-              newOrder: true,
-            })
-            .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-        );
-      }
-    };
-
-    eventSource.onerror = (error) => {
-      console.error("SSE error:", error);
-      eventSource.close();
-    };
-
-    return () => {
-      eventSource.close();
-    };
-  }, [user]);
+    return () => clearInterval(interval);
+  }, [fetchOrders]);
 
   const computeOrders = (orderID) => {
     setOrders((prev) =>

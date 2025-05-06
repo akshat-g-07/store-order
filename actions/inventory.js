@@ -43,9 +43,15 @@ export async function GetInventoryItemByID(id) {
 }
 
 export async function CreateInventoryItem(data) {
+  const { categoryName, ...inventoryData } = data;
   try {
     const inventoryItem = await db.Inventory.create({
-      data,
+      data: {
+        ...inventoryData,
+        category: {
+          connect: { categoryName },
+        },
+      },
     });
     return { data: inventoryItem };
   } catch (error) {
