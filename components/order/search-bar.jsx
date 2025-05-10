@@ -63,7 +63,7 @@ export default function SearchBar({ inventory, isLoading }) {
       </div>
 
       {isFocused && filteredSuggestions.length > 0 && (
-        <div className="absolute z-50 w-full rounded-b-md bg-white shadow-lg">
+        <div className="absolute z-50 w-full rounded-b-md bg-white shadow-lg max-h-[300px] overflow-y-auto">
           {filteredSuggestions.map((suggestion, index) => (
             <div
               key={index}
