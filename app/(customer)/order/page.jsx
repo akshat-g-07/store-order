@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { GetInventory } from "@/actions/inventory";
 import { useToggleStore } from "@/stores/toggle";
 
@@ -14,9 +14,21 @@ import SearchBar from "@/components/order/search-bar";
 
 export default function Page() {
   const { vegOnly, nonVegOnly } = useToggleStore();
-  const [inventory, setInventory] = useState({});
+  const [inventory, setInventory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const groupedInventory = useMemo(() => {
+    if (!inventory.length) return {};
+    return inventory.reduce((acc, item) => {
+      const category = item.categoryName;
+      if (!acc[category]) {
+        acc[category] = [];
+      }
+      acc[category].push(item);
+      return acc;
+    }, {});
+  }, [inventory]);
 
   const fetchInventory = useCallback(async () => {
     setIsLoading(true);
@@ -26,15 +38,7 @@ export default function Page() {
       setInventory({});
     } else {
       setError(null);
-      const groupedInventory = response.data.reduce((acc, item) => {
-        const category = item.categoryName;
-        if (!acc[category]) {
-          acc[category] = [];
-        }
-        acc[category].push(item);
-        return acc;
-      }, {});
-      setInventory(groupedInventory);
+      setInventory(response.data);
     }
     setIsLoading(false);
   }, [vegOnly, nonVegOnly]);
@@ -62,7 +66,7 @@ export default function Page() {
         ) : error ? (
           <Error />
         ) : (
-          <Menu inventory={inventory} />
+          <Menu inventory={groupedInventory} />
         )}
       </section>
       <GoToCart isLoading={isLoading} />
