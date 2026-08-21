@@ -1,11 +1,13 @@
+import { cookies } from 'next/headers'
 import { NextResponse } from "next/server";
 
 const adminRoutes = ["/all-orders", "/order-history", "/inventory"];
 
-export function middleware(request) {
+export async function proxy(request) {
   const url = request.nextUrl.clone();
   const path = url.pathname;
-  const userCookie = request.cookies.get("user")?.value;
+  const cookieStore = await cookies();
+  const userCookie = cookieStore.get("user")?.value;
   const userParam = url.searchParams?.get("user");
 
   const user = userParam || userCookie;
@@ -24,7 +26,7 @@ export function middleware(request) {
       url.searchParams.delete("user");
       const response = NextResponse.redirect(url);
       if (!userCookie) {
-        response.cookies.set("user", user, {
+        cookieStore.set("user", user, {
           httpOnly: false,
           sameSite: "lax",
           expires: new Date("2100-01-01T00:00:00.000Z"),

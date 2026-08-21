@@ -1,6 +1,7 @@
 import Image from "next/image";
 
 import "./globals.css";
+
 import Link from "next/link";
 
 export const metadata = {
@@ -8,10 +9,10 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  const imgSrc = process.env.IMG_URL;
+  const imgSrc = "/image.png";
   return (
     <html lang="en">
-      <body className="min-h-screen">
+      <body className="min-h-svh lg:min-h-screen">
         <header className="bg-brand-primaryYellow w-full h-fit">
           <Link
             className="pt-6 pb-2 flex items-center justify-center"

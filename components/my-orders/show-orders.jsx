@@ -21,7 +21,7 @@ function Order({ order }) {
   return (
     <Accordion type="single" collapsible>
       <AccordionItem value={order.orderID} className="border-b-2">
-        <AccordionTrigger className="hover:no-underline [&>div>.order-title]:hover:underline">
+        <AccordionTrigger className="hover:no-underline hover:[&>div>.order-title]:underline">
           <OrderItemHeader
             orderID={order.orderID}
             status={order.status}
