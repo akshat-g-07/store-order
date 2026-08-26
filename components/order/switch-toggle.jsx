@@ -30,7 +30,7 @@ export default function SwitchToggle({ isLoading, children, vegType = false }) {
           checked={config.checked}
           onCheckedChange={config.onCheckedChange}
           className={cn(
-            "h-3 [&>*]:size-5 [&>*]:data-[state=unchecked]:-translate-x-0.5",
+            "h-3 *:size-5 data-[state=unchecked]:*:-translate-x-0.5",
             config.className
           )}
           disabled={isLoading}

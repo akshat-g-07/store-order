@@ -56,7 +56,7 @@ export default function Page() {
       <section className="py-5 px-2 flex flex-col justify-between items-center sticky top-0 bg-brand-primaryYellow">
         <div className="flex space-x-2 items-center">
           <SearchBar inventory={inventory} isLoading={isLoading} />
-          <ProfileButton />
+          {/* <ProfileButton /> */}
         </div>
         <ModeSwitch isLoading={isLoading} />
       </section>

@@ -46,14 +46,14 @@ export default function SearchBar({ inventory, isLoading }) {
     >
       <div className="flex items-center rounded-md bg-white transition-all duration-200 focus-within:ring-2 focus-within:ring-brand-primaryGreenHover focus-within:shadow-lg overflow-hidden border border-brand-primaryGreen">
         <button
-          className="flex h-10 w-12 items-center justify-center rounded-l-md bg-[#f9eddc] hover:bg-[#f9eddc]/90"
+          className="flex h-10 w-12 items-center justify-center rounded-l-md bg-brand-content hover:bg-brand-content/90"
           aria-label="Search"
         >
           <Search className="size-4 text-gray-800" />
         </button>
         <input
           type="text"
-          className="h-10 flex-1 px-4 text-base focus:outline-none"
+          className="h-10 flex-1 px-4 text-base focus:outline-hidden"
           placeholder="Search Menu"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
